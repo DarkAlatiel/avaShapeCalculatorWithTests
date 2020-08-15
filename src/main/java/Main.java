@@ -13,11 +13,6 @@ public class Main {
             shapes[1] = new IsoscelesTriangle(3, 5);
             shapes[2] = new EquilateralTriangle(3);
             shapes[3] = new RectangularTriangle(3, 4);
-            for (int i = 0; i < shapes.length; i++) {
-                System.out.println(shapes[i]);
-                System.out.printf("Периметр: %.2f\n", shapes[i].getPerimeter());
-                System.out.printf("Площадь: %.2f\n", shapes[i].getSquare());
-            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

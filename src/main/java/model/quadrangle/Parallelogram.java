@@ -1,52 +1,36 @@
-package model.triangle;
+package model.quadrangle;
 
-import model.IPerimeter;
 import model.ISquare;
-import model.ShapeBase;
 import model.Validator;
 
-public class Triangle extends ShapeBase implements IPerimeter, ISquare {
+public class Parallelogram extends Quadrangle implements ISquare {
 
-    protected double firstSide;
-    protected double secondSide;
-    protected double thirdSide;
+    protected double height;
 
-    protected Triangle(String name) {
-        super(name);
-    }
-
-    public Triangle(double firstSide, double secondSide, double thirdSide) {
-        super("Треугольник");
+    public Parallelogram(double firstSide, double secondSide, double height) {
+        super("Параллелограмм");
         if (Validator.isValidSideValue(firstSide)) {
             this.firstSide = firstSide;
+            this.thirdSide = firstSide;
         } else {
             throw new IllegalArgumentException("Неверное значение первой стороны!");
         }
         if (Validator.isValidSideValue(secondSide)) {
             this.secondSide = secondSide;
+            this.fourthSide = secondSide;
         } else {
             throw new IllegalArgumentException("Неверное значение второй стороны!");
         }
-        if (Validator.isValidSideValue(thirdSide)) {
-            this.thirdSide = thirdSide;
+        if (Validator.isValidSideValue(height)) {
+            this.height = height;
         } else {
-            throw new IllegalArgumentException("Неверное значение третьей стороны!");
-        }
-        if (Validator.isNotValidSideValues(firstSide, secondSide, thirdSide)) {
-            throw new IllegalArgumentException("Треугольник невозможно построить!");
+            throw new IllegalArgumentException("Неверное значение высоты!");
         }
     }
 
     @Override
     public double getPerimeter() {
-        return firstSide + secondSide + thirdSide;
-    }
-
-    @Override
-    public double getSquare() {
-        double halfPerimeter = getPerimeter() / 2;
-        return Math.sqrt(halfPerimeter * (halfPerimeter - firstSide) *
-                (halfPerimeter - secondSide) * (halfPerimeter - thirdSide));
+        return (firstSide + secondSide) * 2;
     }
 
     @Override
@@ -54,7 +38,7 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         StringBuilder builder = new StringBuilder(getName());
         builder.append("\nПервая сторона: ").append(firstSide);
         builder.append("\nВторая сторона: ").append(secondSide);
-        builder.append("\nТретья сторона: ").append(thirdSide);
+        builder.append("\nВысота: ").append(height);
         return builder.toString();
     }
 
@@ -63,11 +47,13 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Triangle triangle = (Triangle) o;
+        Parallelogram that = (Parallelogram) o;
 
-        if (Double.compare(triangle.firstSide, firstSide) != 0) return false;
-        if (Double.compare(triangle.secondSide, secondSide) != 0) return false;
-        return Double.compare(triangle.thirdSide, thirdSide) == 0;
+        if (Double.compare(that.firstSide, firstSide) != 0) return false;
+        if (Double.compare(that.secondSide, secondSide) != 0) return false;
+        if (Double.compare(that.thirdSide, thirdSide) != 0) return false;
+        if (Double.compare(that.fourthSide, fourthSide) != 0) return false;
+        return Double.compare(that.height, height) == 0;
     }
 
     @Override
@@ -80,6 +66,15 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(thirdSide);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(fourthSide);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(height);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public double getSquare() {
+        return firstSide * height;
     }
 }

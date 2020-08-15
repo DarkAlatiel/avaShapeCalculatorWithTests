@@ -1,22 +1,22 @@
-package model.triangle;
+package model.quadrangle;
 
 import model.IPerimeter;
-import model.ISquare;
 import model.ShapeBase;
 import model.Validator;
 
-public class Triangle extends ShapeBase implements IPerimeter, ISquare {
+public class Quadrangle extends ShapeBase implements IPerimeter {
 
     protected double firstSide;
     protected double secondSide;
     protected double thirdSide;
+    protected double fourthSide;
 
-    protected Triangle(String name) {
+    protected Quadrangle(String name) {
         super(name);
     }
 
-    public Triangle(double firstSide, double secondSide, double thirdSide) {
-        super("Треугольник");
+    public Quadrangle(double firstSide, double secondSide, double thirdSide, double fourthSide) {
+        super("Четырёхугольник");
         if (Validator.isValidSideValue(firstSide)) {
             this.firstSide = firstSide;
         } else {
@@ -32,21 +32,16 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         } else {
             throw new IllegalArgumentException("Неверное значение третьей стороны!");
         }
-        if (Validator.isNotValidSideValues(firstSide, secondSide, thirdSide)) {
-            throw new IllegalArgumentException("Треугольник невозможно построить!");
+        if (Validator.isValidSideValue(fourthSide)) {
+            this.fourthSide = fourthSide;
+        } else {
+            throw new IllegalArgumentException("Неверное значение четвёртой стороны!");
         }
     }
 
     @Override
     public double getPerimeter() {
-        return firstSide + secondSide + thirdSide;
-    }
-
-    @Override
-    public double getSquare() {
-        double halfPerimeter = getPerimeter() / 2;
-        return Math.sqrt(halfPerimeter * (halfPerimeter - firstSide) *
-                (halfPerimeter - secondSide) * (halfPerimeter - thirdSide));
+        return firstSide + secondSide + thirdSide + fourthSide;
     }
 
     @Override
@@ -55,6 +50,7 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         builder.append("\nПервая сторона: ").append(firstSide);
         builder.append("\nВторая сторона: ").append(secondSide);
         builder.append("\nТретья сторона: ").append(thirdSide);
+        builder.append("\nЧетвёртая сторона: ").append(fourthSide);
         return builder.toString();
     }
 
@@ -63,11 +59,12 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Triangle triangle = (Triangle) o;
+        Quadrangle that = (Quadrangle) o;
 
-        if (Double.compare(triangle.firstSide, firstSide) != 0) return false;
-        if (Double.compare(triangle.secondSide, secondSide) != 0) return false;
-        return Double.compare(triangle.thirdSide, thirdSide) == 0;
+        if (Double.compare(that.firstSide, firstSide) != 0) return false;
+        if (Double.compare(that.secondSide, secondSide) != 0) return false;
+        if (Double.compare(that.thirdSide, thirdSide) != 0) return false;
+        return Double.compare(that.fourthSide, fourthSide) == 0;
     }
 
     @Override
@@ -79,6 +76,8 @@ public class Triangle extends ShapeBase implements IPerimeter, ISquare {
         temp = Double.doubleToLongBits(secondSide);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(thirdSide);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(fourthSide);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }

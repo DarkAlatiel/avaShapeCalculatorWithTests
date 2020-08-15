@@ -20,8 +20,8 @@ public class ValidatorTest {
 
     @Test
     public void isNotValidSideValues() {
-        Assert.assertTrue(Validator.isNotValidSideValues(1,1,1));
-        Assert.assertFalse(Validator.isNotValidSideValues(1,2,3));
-        Assert.assertFalse(Validator.isNotValidSideValues(1,2,4));
+        Assert.assertFalse(Validator.isNotValidSideValues(1, 1, 1));
+        Assert.assertTrue(Validator.isNotValidSideValues(1, 2, 3));
+        Assert.assertTrue(Validator.isNotValidSideValues(1, 2, 4));
     }
 }
